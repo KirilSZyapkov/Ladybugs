@@ -1,0 +1,181 @@
+function ladybugs(input) {
+
+    let lengthOfTheBord = Number(input[0]);
+    let bord = [];
+    let numLaybugs = input[1]
+    let ladybugs = [];
+
+
+    bord.length = lengthOfTheBord;
+
+    for (let a = 0; a < numLaybugs.length; a++) {
+        let num = numLaybugs[a];
+        if (num !== " ") {
+            ladybugs.push(num);
+        }
+    }
+    for (let b = 0; b < ladybugs.length; b++) {
+        for (let c = 0; c < bord.length; c++) {
+            let bug = ladybugs[b];
+            if (bug == c) {
+                bord.splice(c, 1, b);
+            }
+
+        }
+    }
+
+    let curentMove = [];
+    let orientation = "";
+    let indexBug = 0;
+    let numMoves = 0;
+    let isNegative = false;
+
+    for (let d = 2; d < input.length; d++) {
+        let moves = [];
+        moves.push(input[d])
+        let firstMove = moves.toString();
+        for (let e = 0; e < firstMove.length; e++) {
+
+            if (firstMove[e] !== " ") {
+                let check = firstMove[e];
+                if (check === "-") {
+                    isNegative = true;
+                } else {
+                    check = Number(firstMove[e]);
+                    if (Number.isInteger(check)) {
+                        curentMove.push(firstMove[e]);
+                    } else {
+                        orientation += firstMove[e];
+                    }
+                }
+
+            }
+        }
+        if (orientation === "right") {
+            if (isNegative) {
+                numMoves = Number(curentMove[1]) * (-1);
+            } else {
+                numMoves = Number(curentMove[1]);
+            }
+            indexBug = Number(curentMove[0]);
+            if (numMoves > 0) {
+                for (let f = indexBug; f <= indexBug; f++) {
+                    if (bord[f] !== undefined) {
+                        if (bord[f + numMoves] !== undefined) {
+                            bord.splice(indexBug, 1, undefined);
+                            while (bord[f + numMoves] !== undefined) {
+                                numMoves++;
+                            }
+                            bord.splice((f + numMoves), 1, "x");
+                            if (bord.length !== 3) {
+                                bord.length = input[0];
+                            }
+                        } else {
+                            bord.splice(indexBug, 1, undefined);
+                            bord.splice((f + numMoves), 1, "x");
+                            if (bord.length !== 3) {
+                                bord.length = input[0];
+                            }
+                        }
+                    } else {
+
+                    }
+                }
+            } else {
+                for (let f = indexBug; f <= indexBug; f++) {
+                    if (bord[f] !== undefined) {
+                        if (bord[f + numMoves] !== undefined) {
+                            bord.splice(indexBug, 1, undefined);
+                            while (bord[f + numMoves] !== undefined) {
+                                numMoves--;
+                            }
+                            bord.splice((f + numMoves), 1, "x");
+                            if (bord.length !== input[0]) {
+                                bord.length = input[0];
+                            }
+                        } else {
+                            bord.splice(indexBug, 1, undefined);
+                            bord.splice((f + numMoves), 1, "x");
+                            if (bord.length !== input[0]) {
+                                bord.length = input[0];
+                            }
+                        }
+                    } else {
+
+                    }
+                }
+            }
+        } else if (orientation === "left") {
+            if (isNegative) {
+                numMoves = Number(curentMove[1]) * (-1);
+            } else {
+                numMoves = Number(curentMove[1]);
+            }
+            indexBug = Number(curentMove[0]);
+            if (numMoves > 0) {
+                for (let f = indexBug; f <= indexBug; f++) {
+                    if (bord[f] !== undefined) {
+                        if (bord[f - numMoves] !== undefined) {
+                            bord.splice(indexBug, 1, undefined);
+                            while (bord[f - numMoves] !== undefined) {
+                                numMoves--;
+                            }
+                            bord.splice((f - numMoves), 1, "x");
+                            if (bord.length !== input[0]) {
+                                bord.length = input[0];
+                            }
+                        } else {
+                            bord.splice(indexBug, 1, undefined);
+                            bord.splice((f - numMoves), 1, "x");
+                            if (bord.length !== input[0]) {
+                                bord.length = input[0];
+                            }
+                        }
+                    } else {
+
+                    }
+                }
+            } else {
+                for (let f = indexBug; f <= indexBug; f++) {
+                    if (bord[f] !== undefined) {
+                        if (bord[f - numMoves] !== undefined) {
+                            bord.splice(indexBug, 1, undefined);
+                            while (bord[f - numMoves] !== undefined) {
+                                numMoves--;
+                            }
+                            bord.splice(numMoves, 1, "x");
+                            if (bord.length !== input[0]) {
+                                bord.length = input[0];
+                            }
+                        } else {
+                            bord.splice(indexBug, 1, undefined);
+                            bord.splice((f - numMoves), 1, "x");
+                            if (bord.length !== input[0]) {
+                                bord.length = input[0];
+                            }
+                        }
+                    } else {
+
+                    }
+                }
+            }
+
+        }
+        
+        curentMove = [];
+        orientation = "";
+    }
+
+    let result = [];
+
+    for (let z =0; z<bord.length;z++){
+        if(bord[z] === undefined){
+            result.push(0);
+        }else{
+            result.push(1);
+        }
+    }
+
+    console.log(result.join(" "));
+
+}
